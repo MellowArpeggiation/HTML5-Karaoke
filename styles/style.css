@@ -5,15 +5,15 @@ html, body {
     color: #FEFEFE;
 }
 
-#fileWrapper {
+#file-wrapper {
 	transition:all 0.5s ease;
 }
 
-#fileWrapper:hover {
+#file-wrapper:hover {
 	opacity: 1!important;
 }
 
-#visualizer_wrapper {
+#visualizer-wrapper {
 	text-align: center;
 }
 

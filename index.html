@@ -8,20 +8,25 @@
     </head>   
     <body>
         <div id="wrapper">
-            <div id="fileWrapper" class="file_wrapper">
+            <div id="file-wrapper" class="file-wrapper">
                 <div id="info">
                     HTML5 Audio API showcase | An Audio Viusalizer
                 </div>
-                <label for="uploadedFile">Drag&drop or select a file to play:</label>
-                <input type="file" id="uploadedFile"></input>
+                <label for="uploaded-file">Drag&drop or select a file to play:</label>
+                <input type="file" id="uploaded-file"></input>
             </div>
-            <div id="visualizer_wrapper">
+            <div id="visualizer-wrapper">
                 <canvas id='canvas' width="800" height="350"></canvas>
             </div>
         </div>
         <footer>
-            <small>Credit to Wayou: <a href="https://github.com/Wayou/HTML5_Audio_Visualizer"  target="_blank">GitHub</a></small>
+            <small>Credit to Wayou: <a href="https://github.com/Wayou/HTML5_Audio_Visualizer" target="_blank">GitHub</a></small>
         </footer>
-        <script type="text/javascript" src="scripts/html5_audio_visualizer.js"></script>
+        <script type="text/javascript" src="scripts/visualizer.js"></script>
+        <script>
+            window.addEventListener('DOMContentLoaded', function () {
+                var visualizer = new window.Visualizer();
+            });
+        </script>
     </body>
 </html>
