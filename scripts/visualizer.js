@@ -16,14 +16,14 @@
         this.canvas = document.querySelector('canvas');
         this.fileWrapper = document.querySelector('#file-wrapper');
 
-        this.file = null; //the current file
-        this.fileName = null; //the current file name
+        this.file = null; // The current file
+        this.fileName = null; // The current file name
         this.audioContext = null;
-        this.source = null; //the audio source
-        this.info = this.infoBar.innerHTML; //used to upgrade the UI information
-        this.infoUpdateId = null; //to store the setTimeout ID and clear the interval
+        this.source = null; // The audio source
+        this.info = this.infoBar.innerHTML; // Used to upgrade the UI information
+        this.infoUpdateId = null; // To store the setTimeout ID and clear the interval
         this.animationId = null;
-        this.status = 0; //flag for sound is playing 1 or stopped 0
+        this.isPlaying = false;
         this.forceStop = false;
         this.allCapsReachBottom = false;
 
@@ -62,7 +62,7 @@
                     this.file = this.audioInput.files[0];
                     this.fileName = this.file.name;
 
-                    if (this.status === 1) {
+                    if (this.isPlaying) {
                         // The sound is still playing but we upload another file, so set the forceStop flag to true
                         this.forceStop = true;
                     }
@@ -106,14 +106,14 @@
 
                 // Get the dropped file
                 this.file = event.dataTransfer.files[0];
-                if (this.status === 1) {
+                if (this.isPlaying) {
                     this.fileWrapper.style.opacity = 1;
                     this.forceStop = true;
                 }
 
                 this.fileName = this.file.name;
 
-                // Once the file is ready,start the visualizer
+                // Once the file is ready, start the visualizer
                 this._start();
             }, false);
         },
@@ -179,7 +179,7 @@
             }
 
             audioBufferSouceNode.start(0);
-            this.status = 1;
+            this.isPlaying = true;
             this.source = audioBufferSouceNode;
 
             audioBufferSouceNode.onended = () => {
@@ -214,7 +214,7 @@
 
                 analyser.getByteFrequencyData(array);
 
-                if (this.status === 0) {
+                if (!this.isPlaying) {
                     // Fix when some sounds end the value still not back to zero
                     for (i = array.length - 1; i >= 0; i--) {
                         array[i] = 0;
@@ -265,11 +265,11 @@
         _audioEnd: function () {
             if (this.forceStop) {
                 this.forceStop = false;
-                this.status = 1;
+                this.isPlaying = true;
                 return;
             }
 
-            this.status = 0;
+            this.isPlaying = false;
 
             var text = 'HTML5 Audio API showcase | An Audio Viusalizer';
             this.infoBar.innerHTML = text;
@@ -284,7 +284,7 @@
             var i = 0;
             
             this.infoBar.innerHTML = text + dots.substring(0, i++);
-            
+
             if (this.infoUpdateId !== null) {
                 clearTimeout(this.infoUpdateId);
             }
